@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteServiceImpl implements NoteService{
@@ -21,5 +22,16 @@ public class NoteServiceImpl implements NoteService{
     @Override
     public List<Note> getAllNotes() {
         return noteRepository.findAll();
+    }
+
+    @Override
+    public Note getNoteById(Long id) {
+//        Optional<Note> noteOptional = noteRepository.findById(id);
+//        if (noteOptional.isPresent()) {
+//            return noteOptional.get();
+//        }
+//        return null;
+        return noteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: "+id));
     }
 }

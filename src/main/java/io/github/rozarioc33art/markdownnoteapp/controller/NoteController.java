@@ -3,10 +3,7 @@ package io.github.rozarioc33art.markdownnoteapp.controller;
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
 import io.github.rozarioc33art.markdownnoteapp.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +21,11 @@ public class NoteController {
     @GetMapping("/api/notes")
     public List<Note> getAllNotes() {
         return noteService.getAllNotes();
+    }
+
+    @GetMapping("api/notes/{id}")
+    public Note getNoteById(@PathVariable("id") Long id) {
+        return noteService.getNoteById(id);
     }
 
 }
