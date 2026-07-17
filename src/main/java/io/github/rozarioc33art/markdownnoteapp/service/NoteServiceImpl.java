@@ -1,6 +1,7 @@
 package io.github.rozarioc33art.markdownnoteapp.service;
 
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
+import io.github.rozarioc33art.markdownnoteapp.exception.NoteNotFoundException;
 import io.github.rozarioc33art.markdownnoteapp.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,6 @@ public class NoteServiceImpl implements NoteService{
 //        }
 //        return null;
         return noteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: "+id));
+                .orElseThrow(() -> new NoteNotFoundException(id));
     }
 }
