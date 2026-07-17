@@ -5,6 +5,8 @@ import io.github.rozarioc33art.markdownnoteapp.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class NoteServiceImpl implements NoteService{
 
@@ -14,5 +16,10 @@ public class NoteServiceImpl implements NoteService{
     @Override
     public Note createNote(Note note) {
         return noteRepository.save(note);
+    }
+
+    @Override
+    public List<Note> getAllNotes() {
+        return noteRepository.findAll();
     }
 }

@@ -2,8 +2,11 @@ package io.github.rozarioc33art.markdownnoteapp.service;
 
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
 
+import java.util.List;
+
 public interface NoteService {
 
     Note createNote(Note note);
+    List<Note> getAllNotes();
 
 }
