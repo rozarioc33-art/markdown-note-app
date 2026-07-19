@@ -18,20 +18,24 @@ public class NoteController {
     @PostMapping("/api/notes")
     public ResponseEntity<Note> createNote(@RequestBody Note note) {
         Note savedNote = noteService.createNote(note);
-        return new ResponseEntity<>(savedNote, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedNote);
     }
 
     @GetMapping("/api/notes")
-    public List<Note> getAllNotes() {
-        return noteService.getAllNotes();
+    public ResponseEntity<List<Note>> getAllNotes() {
+
+        List<Note> notes = noteService.getAllNotes();
+        return ResponseEntity.ok(notes);
     }
 
-    @GetMapping("api/notes/{id}")
-    public Note getNoteById(@PathVariable Long id) {
-        return noteService.getNoteById(id);
+    @GetMapping("/api/notes/{id}")
+    public ResponseEntity<Note> getNoteById(@PathVariable Long id) {
+
+        Note note = noteService.getNoteById(id);
+        return ResponseEntity.ok(note);
     }
 
-    @PutMapping("api/notes/{id}")
+    @PutMapping("/api/notes/{id}")
     public ResponseEntity<Note> updateNote(
             @PathVariable Long id,
             @RequestBody Note updatedNote) {
