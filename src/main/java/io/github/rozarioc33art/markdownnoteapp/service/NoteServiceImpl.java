@@ -1,14 +1,14 @@
 package io.github.rozarioc33art.markdownnoteapp.service;
 
-import io.github.rozarioc33art.markdownnoteapp.dto.PreviewRequest;
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
 import io.github.rozarioc33art.markdownnoteapp.exception.NoteNotFoundException;
 import io.github.rozarioc33art.markdownnoteapp.repository.NoteRepository;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NoteServiceImpl implements NoteService{
@@ -55,7 +55,20 @@ public class NoteServiceImpl implements NoteService{
 
     @Override
     public String toHtml(String request) {
-        return "";
+
+//      Class provided by CommonMark library
+        Parser parser = Parser.builder().build();
+//      Builder() returns builder obj
+//      builder stores configuration
+//      parser contains the created parser obj
+
+        Node document = parser.parse(request);
+//      Node node = parser.parse(request);
+//      the parser reads the Markdown and understands its structure.
+
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);
+
     }
 
 

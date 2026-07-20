@@ -52,8 +52,9 @@ public class NoteController {
     }
 
     @PostMapping("/api/preview")
-    public void toHtml(@RequestBody PreviewRequest request) {
-        noteService.toHtml(request.getContent());
+    public ResponseEntity<String> toHtml(@RequestBody PreviewRequest request) {
+        String html = noteService.toHtml(request.getContent());
+        return ResponseEntity.ok(html);
     }
 
 
