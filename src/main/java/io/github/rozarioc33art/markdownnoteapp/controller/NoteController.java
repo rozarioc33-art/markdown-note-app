@@ -1,5 +1,6 @@
 package io.github.rozarioc33art.markdownnoteapp.controller;
 
+import io.github.rozarioc33art.markdownnoteapp.dto.PreviewRequest;
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
 import io.github.rozarioc33art.markdownnoteapp.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,13 @@ public class NoteController {
         noteService.deleteNote(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/api/preview")
+    public void toHtml(@RequestBody PreviewRequest request) {
+        noteService.toHtml(request.getContent());
+    }
+
+
+
 
 }
