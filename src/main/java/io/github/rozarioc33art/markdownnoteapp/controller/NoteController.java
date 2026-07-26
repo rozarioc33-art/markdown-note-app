@@ -57,7 +57,4 @@ public class NoteController {
         return ResponseEntity.ok(html);
     }
 
-
-
-
 }
