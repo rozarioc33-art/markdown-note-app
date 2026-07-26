@@ -1,8 +1,10 @@
 package io.github.rozarioc33art.markdownnoteapp.controller;
 
+import io.github.rozarioc33art.markdownnoteapp.dto.CreateNoteRequest;
 import io.github.rozarioc33art.markdownnoteapp.dto.PreviewRequest;
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
 import io.github.rozarioc33art.markdownnoteapp.service.NoteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,13 @@ public class NoteController {
     private NoteService noteService;
 
     @PostMapping("/api/notes")
-    public ResponseEntity<Note> createNote(@RequestBody Note note) {
+    public ResponseEntity<Note> createNote(@Valid @RequestBody CreateNoteRequest request) {
+
+        Note note = new Note();
+        note.setTitle(request.getTitle());
+        note.setContent(request.getContent());
         Note savedNote = noteService.createNote(note);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(savedNote);
     }
 
