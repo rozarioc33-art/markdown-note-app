@@ -22,6 +22,8 @@ public class NoteController {
     public ResponseEntity<Note> createNote(@Valid @RequestBody CreateNoteRequest request) {
 
         Note note = new Note();
+
+//      copy title, content
         note.setTitle(request.getTitle());
         note.setContent(request.getContent());
         Note savedNote = noteService.createNote(note);
