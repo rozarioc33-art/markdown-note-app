@@ -9,6 +9,7 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteServiceImpl implements NoteService{
@@ -28,8 +29,18 @@ public class NoteServiceImpl implements NoteService{
 
     @Override
     public Note getNoteById(Long id) {
-        return noteRepository.findById(id)
-                .orElseThrow(() -> new NoteNotFoundException(id));
+
+//        returns an optional object
+        Optional<Note> optionalNote = noteRepository.findById(id);
+
+//        return optionalNote.orElseThrow(
+//                () -> new NoteNotFoundException(id)
+//        );
+        if (optionalNote.isPresent()) {
+            return optionalNote.get();
+        } else {
+            throw new NoteNotFoundException(id);
+        }
     }
 
     @Override

@@ -11,10 +11,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoteNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNoteNotFound(NoteNotFoundException ex) {
 
+//        ex.printStackTrace();
         ErrorResponse error = new ErrorResponse(ex.getMessage());
+//        .getMessage() comes from the runtime exception class.
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(error);
     }
-
 }
