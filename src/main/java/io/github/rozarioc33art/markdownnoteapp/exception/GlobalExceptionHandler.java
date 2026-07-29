@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ControllerAdvice
@@ -17,8 +18,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleNoteNotFound(NoteNotFoundException ex) {
 
 //        ex.printStackTrace();
-        ErrorResponse error = new ErrorResponse(ex.getMessage());
-//        .getMessage() comes from the runtime exception class.
+        List<String> messages = new ArrayList<>();
+        messages.add(ex.getMessage());
+
+        ErrorResponse error = new ErrorResponse(messages);
 
 //        method chaining
         return ResponseEntity
@@ -33,10 +36,16 @@ public class GlobalExceptionHandler {
         //  System.out.println(ex.getBindingResult());
         BindingResult bindingResult = ex.getBindingResult();
 
+//        fieldErrors is simply a java list
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        String message = fieldErrors.getDefaultMessage();
+        List<String> messages = new ArrayList<>();
 
-        ErrorResponse error = new ErrorResponse(message);
+//        for each
+        for (FieldError error : fieldErrors) {
+            messages.add(error.getDefaultMessage());
+        }
+
+        ErrorResponse error = new ErrorResponse(messages);
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
