@@ -20,6 +20,7 @@ public class NoteController {
 
     @PostMapping("/api/notes")
     public ResponseEntity<Note> createNote(@Valid @RequestBody CreateNoteRequest request) {
+//      throws method_argument_not_valid exception
 
         Note note = new Note();
 
@@ -28,7 +29,9 @@ public class NoteController {
         note.setContent(request.getContent());
         Note savedNote = noteService.createNote(note);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedNote);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(savedNote);
     }
 
     @GetMapping("/api/notes")
