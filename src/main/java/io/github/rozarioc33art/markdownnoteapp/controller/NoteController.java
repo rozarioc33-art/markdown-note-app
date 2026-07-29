@@ -2,6 +2,7 @@ package io.github.rozarioc33art.markdownnoteapp.controller;
 
 import io.github.rozarioc33art.markdownnoteapp.dto.CreateNoteRequest;
 import io.github.rozarioc33art.markdownnoteapp.dto.PreviewRequest;
+import io.github.rozarioc33art.markdownnoteapp.dto.UpdateNoteRequest;
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
 import io.github.rozarioc33art.markdownnoteapp.service.NoteService;
 import jakarta.validation.Valid;
@@ -51,10 +52,14 @@ public class NoteController {
     @PutMapping("/api/notes/{id}")
     public ResponseEntity<Note> updateNote(
             @PathVariable Long id,
-            @RequestBody Note updatedNote) {
+            @Valid @RequestBody UpdateNoteRequest request) {
 
-        Note note = noteService.updateNote(id, updatedNote);
-        return ResponseEntity.ok(note);
+        Note note = new Note();
+        note.setTitle(request.getTitle());
+        note.setContent(request.getContent());
+
+        Note updatedNote = noteService.updateNote(id, note);
+        return ResponseEntity.ok(updatedNote);
     }
 
     @DeleteMapping("/api/notes/{id}")
