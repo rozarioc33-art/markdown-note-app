@@ -1,5 +1,6 @@
 package io.github.rozarioc33art.markdownnoteapp.service;
 
+import io.github.rozarioc33art.markdownnoteapp.dto.MarkdownFileResponse;
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
 import io.github.rozarioc33art.markdownnoteapp.exception.NoteNotFoundException;
 import io.github.rozarioc33art.markdownnoteapp.repository.NoteRepository;
@@ -8,6 +9,9 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,6 +84,18 @@ public class NoteServiceImpl implements NoteService{
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         return renderer.render(document);
 
+    }
+
+    @Override
+    public MarkdownFileResponse uploadMarkdown(MultipartFile file) throws IOException {
+        String filename = file.getOriginalFilename();
+        String content = new String(file.getBytes());
+
+        MarkdownFileResponse response = new MarkdownFileResponse();
+        response.setTitle(filename);
+        response.setContent(content);
+
+        return response;
     }
 
 

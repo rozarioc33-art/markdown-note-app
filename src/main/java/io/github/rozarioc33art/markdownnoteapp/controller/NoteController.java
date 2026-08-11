@@ -1,6 +1,7 @@
 package io.github.rozarioc33art.markdownnoteapp.controller;
 
 import io.github.rozarioc33art.markdownnoteapp.dto.CreateNoteRequest;
+import io.github.rozarioc33art.markdownnoteapp.dto.MarkdownFileResponse;
 import io.github.rozarioc33art.markdownnoteapp.dto.PreviewRequest;
 import io.github.rozarioc33art.markdownnoteapp.dto.UpdateNoteRequest;
 import io.github.rozarioc33art.markdownnoteapp.entity.Note;
@@ -10,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class NoteController {
 
@@ -72,6 +76,14 @@ public class NoteController {
     public ResponseEntity<String> toHtml(@RequestBody PreviewRequest request) {
         String html = noteService.toHtml(request.getContent());
         return ResponseEntity.ok(html);
+    }
+
+    @PostMapping("/api/notes/upload")
+    public ResponseEntity<MarkdownFileResponse> uploadMarkdown(
+            @RequestParam("file")MultipartFile file
+            ) throws IOException {
+
+        return ResponseEntity.ok(noteService.uploadMarkdown(file));
     }
 
 }
